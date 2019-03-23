@@ -1,0 +1,5 @@
+{
+  "cookie": "delete a tweet on twitter, copy the curl, get the cookies",
+  "username": "your @",
+  "authenticityToken": "delete a tweet on twitter, copy the curl, get the authenticity_token"
+}

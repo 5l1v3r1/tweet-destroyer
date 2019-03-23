@@ -1,0 +1,14 @@
+{
+  "name": "tweet-destroyer",
+  "version": "1.0.0",
+  "main": "index.js",
+  "license": "MIT",
+  "scripts": {
+    "start": "node index.js"
+  },
+  "dependencies": {
+    "curl-request": "^1.1.1",
+    "fs-promise": "^2.0.3",
+    "progress": "^2.0.1"
+  }
+}
