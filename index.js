@@ -1,6 +1,6 @@
 const fs = require('fs-promise')
 const ProgressBar = require('progress')
-const destroyTweet = require('./destroyTweet')
+const destroyTweet = require('./destroy-tweet')
 
 function getCursor() {
   return fs
@@ -16,13 +16,13 @@ function saveCursor(cursor) {
 async function getTweets() {
   let currentFile
   let allTweets = []
-  const files = await fs.readdir('./data')
+  const files = await fs.readdir('./tweets')
 
   while ((currentFile = files.shift())) {
     let currentTweet
 
     const tweets = await fs
-      .readFile(`./data/${currentFile}`, 'UTF-8')
+      .readFile(`./tweets/${currentFile}`, 'UTF-8')
       .then(str => str.replace(/[\w\W]+?\n+?/, ''))
       .then(JSON.parse)
       .catch(error => {
@@ -47,16 +47,18 @@ async function asyncForEach(array, callback) {
 async function main() {
   const cursor = await getCursor()
   const tweets = await getTweets()
+  const tweetsToKeep = (await fs.readFile('./to-keep.txt', 'UTF-8')).split('\n')
+  const tweetsToDelete = tweets.filter(tweet => !tweetsToKeep.includes(tweet))
 
   const bar = new ProgressBar('[:bar] :current/:total | :percent | :message', {
     curr: cursor,
-    total: tweets.length,
+    total: tweetsToDelete.length,
     width: 23,
     incomplete: ' ',
     complete: '='
   })
 
-  asyncForEach(tweets.slice(cursor), async (tweet, index) => {
+  asyncForEach(tweetsToDelete.slice(cursor), async (tweet, index) => {
     let message
 
     try {

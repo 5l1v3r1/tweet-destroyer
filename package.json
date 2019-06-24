@@ -9,6 +9,6 @@
   "dependencies": {
     "curl-request": "^1.1.1",
     "fs-promise": "^2.0.3",
-    "progress": "^2.0.1"
+    "progress": "^2.0.3"
   }
 }
